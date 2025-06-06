@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+        text-align: center;
+    }
+    input{
+        width: 5vw;
+        height: 10vh;
+        text-align: center;
+    }
+    button{
+        width: 10vw;
+        height: 8vh;
+    }
+    </style>
+    
+</head>
+<body>
+    <h1>Cow bull game</h1><br>
+    <div>
+        <input type="text" id="input1">
+    <input type="text" id="input2">
+    <input type="text" id="input3">
+    </div>
+    <br> 
+    <button type="button" class="button" onclick="check()">check</button>
+    <div class="output">
+
+    </div>
+    <script>
+        let num = Math.floor(Math.random() * 900) + 100;
+        window.onload = () => {
+  document.getElementById("input1").focus();
+
+  const inputs = [
+    document.getElementById("input1"),
+    document.getElementById("input2"),
+    document.getElementById("input3")
+  ];
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", () => {
+      // Only move focus if one digit is typed
+      if (input.value.length === 1 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+    });
+
+    // Optional: Allow backspace to go to the previous field
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && input.value === "" && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+  });
+};
+
+        function reset(){
+            window.location.reload()
+        }
+        num=num.toString();
+        while (num[0]==num[1] || num[1]==num[2]|| num[2]==num[0]){
+            num = Math.floor(Math.random() * 900) + 100;
+            num=num.toString();
+        }
+        console.log(num);
+        function check(){
+            
+            let output=document.getElementsByClassName('output')[0];
+            let v1=document.getElementById('input1').value;
+        let v2=document.getElementById('input2').value;
+        let v3=document.getElementById('input3').value;
+        if ([v1, v2,v3].some((x)=>!x.match(/^\d$/))){
+            output.innerHTML='please enter single digit in each input field';
+            return;
+        }
+        if (v1==v2 || v2==v3 || v3==v1){
+            output.innerHTML='please enter a number with non repeating digits';
+            return;
+        }
+        let x=v1+v2+v3;
+        console.log(num);
+        console.log(x);
+        // x=parseInt(x);
+        if (num===x){
+            output.innerHTML='<h3>🎉🎉Hurray u guessed it correct!</h3><br><button type="button"  onclick="reset()">Play again</button>'
+            document.getElementById('input1').value = '';
+document.getElementById('input2').value = '';
+document.getElementById('input3').value = '';
+document.getElementById('input1').focus();
+
+            document.querySelector('.button').disabled=true;
+
+        }
+        else{
+            // x=toString();
+            n=num;
+            let b=0;
+            let c=0;
+            for (let i=0; i<3 ; i++){
+                for (let j=0; j<3; j++){
+                    if (x[i]===n[j]){
+                        if (i==j){
+                            c+=1
+                        }
+                        else{
+                            b+=1
+                        }
+
+                    }
+                }
+            }
+            output.innerHTML=`${b} Bulls and ${c} Cows`
+        }
+        document.getElementById('input1').value = '';
+document.getElementById('input2').value = '';
+document.getElementById('input3').value = '';
+document.getElementById('input1').focus();
+
+
+        }
+        
+    </script>
+</body>
+</html>
